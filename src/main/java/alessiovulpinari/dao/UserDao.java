@@ -14,6 +14,7 @@ public class UserDao {
         this.entityManager = entityManager;
     }
 
+    // Save a User in the DB
     public void save(User user) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -22,6 +23,7 @@ public class UserDao {
         System.out.println("L'utente: " + user.getLastName() + " è stato aggiunto correttamente al db!");
     }
 
+    // Return a User based on the passed parameter
     public User getByCardId(String cardId) {
         User found = entityManager.find(User.class, UUID.fromString(cardId));
 
@@ -30,6 +32,7 @@ public class UserDao {
         return found;
     }
 
+    // Delete a User from the DB based on the passed parameter
     public void deleteByCardId(String cardId) {
         User foundUser = getByCardId(cardId);
         EntityTransaction transaction = entityManager.getTransaction();

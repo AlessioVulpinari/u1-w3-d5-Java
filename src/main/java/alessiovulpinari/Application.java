@@ -10,7 +10,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Application {
 
@@ -65,12 +64,15 @@ public class Application {
         /* userDao.save(davide);
          loanDao.save(loan);
 
-        // Search by InLoan
+        /* Search by InLoan
         List<CatalogueElement> catalogueElementList = loanDao.searchByInLoan("a941cc09-fd49-43a4-b384-b49a366533be");
         catalogueElementList.forEach(System.out::println); */
 
-        // Searchy by LoanNotReturned
+        /* Search by LoanNotReturned
         List<Loan> loans = loanDao.searchByLoanNotReturned();
-        System.out.println(loans);
+        System.out.println(loans); */
+
+        em.close();
+        emf.close();
     }
 }
