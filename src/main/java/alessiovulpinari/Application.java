@@ -60,12 +60,17 @@ public class Application {
 
         CatalogueElement leDueTorriFromDb = catalogueElementDao.getByIsbn("2d4bb0d0-1242-472f-b08b-49f3a7832c3b");
         User davide = new User("Davide", "Luigini", LocalDate.now());
-        Loan loan = new Loan(LocalDate.now(), null, userDao.getByCardId("a941cc09-fd49-43a4-b384-b49a366533be"), leDueTorriFromDb);
+        Loan loan = new Loan(LocalDate.now().minusDays(60), null, userDao.getByCardId("a941cc09-fd49-43a4-b384-b49a366533be"), leDueTorriFromDb);
 
-//        userDao.save(davide);
-//        loanDao.save(loan);
+        /* userDao.save(davide);
+         loanDao.save(loan);
 
+        // Search by InLoan
         List<CatalogueElement> catalogueElementList = loanDao.searchByInLoan("a941cc09-fd49-43a4-b384-b49a366533be");
-        catalogueElementList.forEach(System.out::println);
+        catalogueElementList.forEach(System.out::println); */
+
+        // Searchy by LoanNotReturned
+        List<Loan> loans = loanDao.searchByLoanNotReturned();
+        System.out.println(loans);
     }
 }

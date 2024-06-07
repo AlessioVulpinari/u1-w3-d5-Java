@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +48,15 @@ public class LoanDao {
         TypedQuery<CatalogueElement> query = entityManager.createQuery("SELECT l.catalogueElement FROM Loan l WHERE l.user.cardId = :cardId AND l.actLoanRepaymentDate IS NULL",
                 CatalogueElement.class);
         query.setParameter("cardId", UUID.fromString(cardId));
+
+        return query.getResultList();
+    }
+
+    public List<Loan> searchByLoanNotReturned() {
+        LocalDate today = LocalDate.now();
+        TypedQuery<Loan> query = entityManager.createQuery("SELECT l FROM Loan l WHERE l.actLoanRepaymentDate IS NULL AND l.expLoanRepaymentDate > :today",
+                Loan.class);
+        query.setParameter("today", today);
 
         return query.getResultList();
     }
