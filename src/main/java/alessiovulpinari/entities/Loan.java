@@ -18,7 +18,7 @@ public class Loan {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "isbn", nullable = false)
+    @JoinColumn(name = "isbn")
     private CatalogueElement catalogueElement;
 
     @Column(name = "data_inizio_prestito", nullable = false)
@@ -27,16 +27,18 @@ public class Loan {
     @Column(name = "data_restituzione_prevista", nullable = false)
     private LocalDate expLoanRepaymentDate;
 
-    @Column(name = "data_restituzione_effettiva", nullable = false)
+    @Column(name = "data_restituzione_effettiva")
     private LocalDate actLoanRepaymentDate;
 
     public Loan() {
     }
 
-    public Loan(LocalDate loanStartDate, LocalDate expLoanRepaymentDate, LocalDate actLoanRepaymentDate) {
+    public Loan(LocalDate loanStartDate, LocalDate actLoanRepaymentDate, User user, CatalogueElement catalogueElement) {
         this.loanStartDate = loanStartDate;
-        this.expLoanRepaymentDate = expLoanRepaymentDate;
+        this.expLoanRepaymentDate = this.getLoanStartDate().plusDays(30);
         this.actLoanRepaymentDate = actLoanRepaymentDate;
+        this.user = user;
+        this.catalogueElement = catalogueElement;
     }
 
     public UUID getLoanId() {

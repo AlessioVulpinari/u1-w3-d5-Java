@@ -1,10 +1,13 @@
 package alessiovulpinari.dao;
 
+import alessiovulpinari.entities.CatalogueElement;
 import alessiovulpinari.entities.Loan;
 import alessiovulpinari.exceptions.NotFoundExceptions;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
+import java.util.List;
 import java.util.UUID;
 
 public class LoanDao {
@@ -37,5 +40,14 @@ public class LoanDao {
         entityManager.remove(foundLoan);
         transaction.commit();
         System.out.println("Il prestito " + foundLoan.getLoanId() + " è stato eliminato correttamente al db!");
+    }
+
+    public List<CatalogueElement> searchByInLoan(String cardId) {
+        // Ho inteso attualmente in prestito come non ancora riconsegnati
+        TypedQuery<CatalogueElement> query = entityManager.createQuery("SELECT l.catalogueElement FROM Loan l WHERE l.user.cardId = :cardId AND l.actLoanRepaymentDate IS NULL",
+                CatalogueElement.class);
+        query.setParameter("cardId", UUID.fromString(cardId));
+
+        return query.getResultList();
     }
 }
