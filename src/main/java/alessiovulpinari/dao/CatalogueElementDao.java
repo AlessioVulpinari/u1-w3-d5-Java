@@ -19,16 +19,9 @@ public class CatalogueElementDao {
     }
 
     public void save(CatalogueElement catalogueElement) {
-        // Aprire la transazione
         EntityTransaction transaction = entityManager.getTransaction();
-
-        // Iniziare la transazione
         transaction.begin();
-
-        // Aggiungere al persist Context
         entityManager.persist(catalogueElement);
-
-        // Chiudere la transazione, salvando nel db
         transaction.commit();
         System.out.println("L'elemento " + catalogueElement.getTitle() + " è stato aggiunto correttamente al db!");
     }
@@ -42,21 +35,11 @@ public class CatalogueElementDao {
     }
 
     public void deleteByIsbn(String isbn) {
-        // Cerchiamo l'elemento
         CatalogueElement foundElement = getByIsbn(isbn);
-
-        // Creo la transazione
         EntityTransaction transaction = entityManager.getTransaction();
-
-        // Inizializzo la transazione
         transaction.begin();
-
-        // Rimuovo l'evento
         entityManager.remove(foundElement);
-
-        // Chiudo la transazione e salvo il cambiamento
         transaction.commit();
-
         System.out.println("L'elemento: " + foundElement.getTitle() + " è stato eliminato correttamente al db!");
     }
 
